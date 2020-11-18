@@ -1,49 +1,70 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { BiPlus } from 'react-icons/bi';
-import textHelper from '../helpers/textHelper';
+import { BiPlus, BiMinus } from 'react-icons/bi';
+import { principleAges } from '../data/principleAges';
+import { principleDescriptions } from '../data/principleDescriptions';
 
-export default function Entry({ foldAll, showAll, showLabel, showDescription, categoryText, children }: any) {
-  const [showChildren, setShowChildren] = useState(false);
+export default function Entry({ foldAll, showAll, showLabel, showAge, showDescription, label, children }: any) {
+  const [showChildren, setShowChildren] = useState(true);
 
   useEffect(() => {
-    setShowChildren(true);
+    if (showAll != 0) {
+      setShowChildren(true);
+    }
   }, [showAll]);
 
   useEffect(() => {
-    setShowChildren(false);
+    if (foldAll != 0) {
+      setShowChildren(false);
+    }
   }, [foldAll]);
-  const [label, description] = textHelper(categoryText);
-  const keys = children ? Object.keys(children) : null;
-  const childrenList = keys
-    ? keys.map((key) => (
+
+  const age = principleAges[label] || '4';
+  const description = principleDescriptions[label] || label;
+  const childLabels = children ? Object.keys(children) : null;
+  const childrenList = childLabels
+    ? childLabels.map((label) => (
         <Entry
-          key={key}
+          key={label}
           showAll={showAll}
           foldAll={foldAll}
           showLabel={showLabel}
+          showAge={showAge}
           showDescription={showDescription}
-          categoryText={key}
-          children={children[key]}
+          label={label}
+          children={children[label]}
         />
       ))
     : null;
 
+  const icon = showChildren ? (
+    <StyledBiMinus
+      keys={childLabels}
+      onClick={() => setShowChildren(!showChildren)}
+      onContextMenu={() => console.log('contextMenu')}
+    ></StyledBiMinus>
+  ) : (
+    <StyledBiPlus
+      keys={childLabels}
+      onClick={() => setShowChildren(!showChildren)}
+      onContextMenu={() => console.log('contextMenu')}
+    ></StyledBiPlus>
+  );
+
   return (
     <Container>
       <Text>
-        <StyledIcon
-          keys={keys}
-          onClick={() => setShowChildren(!showChildren)}
-          onContextMenu={() => console.log('contextMenu')}
-        ></StyledIcon>
+        {icon}
         <Label showLabel={showLabel}>
           {label}
           <Hyphen showLabel={showLabel} showDescription={showDescription}>
             -
           </Hyphen>
         </Label>
-        <Description showDescription={showDescription}>{description}</Description>
+        <Description showDescription={showDescription}>
+          <Age showAge={showAge}>{`(${age}+) `}</Age>
+          {description}
+        </Description>
       </Text>
       <Children showChildren={showChildren}>{childrenList}</Children>
     </Container>
@@ -73,11 +94,22 @@ const Description = styled.span`
   display: ${({ showDescription }) => (showDescription ? 'inline' : 'none')};
 `;
 
+const Age = styled.span`
+  display: ${({ showAge }) => (showAge ? 'inline' : 'none')};
+`;
+
 const Children = styled.div`
   display: ${({ showChildren }) => (showChildren ? 'block' : 'none')};
 `;
 
-const StyledIcon = styled(BiPlus)`
+const StyledBiPlus = styled(BiPlus)`
+  display: ${({ keys }) => (keys.length > 0 ? 'block' : 'none')};
+  cursor: pointer;
+  position: absolute;
+  left: -20px;
+`;
+
+const StyledBiMinus = styled(BiMinus)`
   display: ${({ keys }) => (keys.length > 0 ? 'block' : 'none')};
   cursor: pointer;
   position: absolute;

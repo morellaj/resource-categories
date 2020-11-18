@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
-import categories from '../data/categories';
 import Entry from '../components/entry';
 import styled from 'styled-components';
+import resourceLabelsStructure from '../data/resourceLabelsStructure';
 
 export default function Home() {
   const [foldAll, setFoldAll] = useState(0);
   const [showAll, setShowAll] = useState(0);
   const [showLabel, setShowLabel] = useState(true);
   const [showDescription, setShowDescription] = useState(true);
+  const [showAge, setShowAge] = useState(false);
 
-  const categoryKeys = Object.keys(categories);
-  const categoryList = categoryKeys.map((category) => (
+  const resourceLabelKeys = Object.keys(resourceLabelsStructure);
+  const resourceList = resourceLabelKeys.map((label) => (
     <Entry
-      key={category}
+      key={label}
       foldAll={foldAll}
       showAll={showAll}
       showLabel={showLabel}
+      showAge={showAge}
       showDescription={showDescription}
-      categoryText={category}
-      children={categories[category]}
+      label={label}
+      children={resourceLabelsStructure[label]}
     />
   ));
   return (
@@ -28,8 +30,9 @@ export default function Home() {
         <button onClick={() => setShowAll(showAll + 1)}>Open All</button>
         <button onClick={() => setShowLabel(!showLabel)}>Show Label</button>
         <button onClick={() => setShowDescription(!showDescription)}>Show Description</button>
+        <button onClick={() => setShowAge(!showAge)}>Show Age</button>
       </ButtonContainer>
-      {categoryList}
+      {resourceList}
     </div>
   );
 }
