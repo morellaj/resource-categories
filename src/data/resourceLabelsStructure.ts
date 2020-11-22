@@ -398,6 +398,7 @@ import {
   light,
   reflection,
   lightColors,
+  RP35,
 } from './resourceLabels';
 
 export default {
@@ -445,8 +446,9 @@ export default {
             [RP31]: {
               [RP32]: {},
             },
-            [RP33]: {},
           },
+          [RP33]: {},
+          [RP35]: {},
         },
       },
       [RC]: {

@@ -45,6 +45,8 @@ export const RP30 = 'RP30';
 export const RP31 = 'RP31';
 export const RP33 = 'RP33';
 export const RP32 = 'RP32';
+export const RP34 = 'RP34';
+export const RP35 = 'RP35';
 export const RC1 = 'RC1';
 export const RC3 = 'RC3';
 export const RC6 = 'RC6';
@@ -396,7 +398,6 @@ export const circuitBreakers = 'circuitBreakers';
 export const grounding = 'grounding';
 export const reflection = 'reflection';
 export const lightColors = 'lightColors';
-export const RP34 = 'RP34';
 
 export const resourceLabelList = [
   challenge,
@@ -447,6 +448,8 @@ export const resourceLabelList = [
   RP31,
   RP33,
   RP32,
+  RP34,
+  RP35,
   RC1,
   RC3,
   RC6,
@@ -592,7 +595,6 @@ export const resourceLabelList = [
   IS43,
   IS44,
   IS45,
-  RP34,
   curriculum,
   practice,
   speed,
