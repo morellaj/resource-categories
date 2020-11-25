@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { principleAges } from '../data/principleAges';
 import { principleDescriptions } from '../data/principleDescriptions';
+import LearningGoalList from './learningGoalList';
+import { learningGoals } from '../data/learningGoals';
 
-export default function Entry({ foldAll, showAll, showLabel, showAge, showDescription, label, children }: any) {
+export default function Entry({ foldAll, showAll, showLabel, showAge, showDescription, masterShowLearningGoals, label, children }: any) {
   const [showChildren, setShowChildren] = useState(true);
+  const [showLearningGoals, setShowLearningGoals] = useState(false);
 
   useEffect(() => {
     if (showAll != 0) {
@@ -19,6 +22,10 @@ export default function Entry({ foldAll, showAll, showLabel, showAge, showDescri
     }
   }, [foldAll]);
 
+  useEffect(() => {
+    setShowLearningGoals(masterShowLearningGoals);
+  }, [masterShowLearningGoals]);
+
   const age = principleAges[label] || '4';
   const description = principleDescriptions[label] || label;
   const childLabels = children ? Object.keys(children) : null;
@@ -31,6 +38,7 @@ export default function Entry({ foldAll, showAll, showLabel, showAge, showDescri
           showLabel={showLabel}
           showAge={showAge}
           showDescription={showDescription}
+          masterShowLearningGoals={masterShowLearningGoals}
           label={label}
           children={children[label]}
         />
@@ -41,19 +49,19 @@ export default function Entry({ foldAll, showAll, showLabel, showAge, showDescri
     <StyledBiMinus
       keys={childLabels}
       onClick={() => setShowChildren(!showChildren)}
-      onContextMenu={() => console.log('contextMenu')}
-    ></StyledBiMinus>
+      onContextMenu={() => console.log('contextMenu')}></StyledBiMinus>
   ) : (
     <StyledBiPlus
       keys={childLabels}
       onClick={() => setShowChildren(!showChildren)}
-      onContextMenu={() => console.log('contextMenu')}
-    ></StyledBiPlus>
+      onContextMenu={() => console.log('contextMenu')}></StyledBiPlus>
   );
+
+  const entryLearningGoals = learningGoals[label];
 
   return (
     <Container>
-      <Text>
+      <Text onClick={() => setShowLearningGoals(!showLearningGoals)}>
         {icon}
         <Label showLabel={showLabel}>
           {label}
@@ -66,6 +74,7 @@ export default function Entry({ foldAll, showAll, showLabel, showAge, showDescri
           {description}
         </Description>
       </Text>
+      {entryLearningGoals && showLearningGoals && <LearningGoalList learningGoals={learningGoals[label]} />}
       <Children showChildren={showChildren}>{childrenList}</Children>
     </Container>
   );

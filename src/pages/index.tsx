@@ -6,6 +6,7 @@ import resourceLabelsStructure from '../data/resourceLabelsStructure';
 export default function Home() {
   const [foldAll, setFoldAll] = useState(0);
   const [showAll, setShowAll] = useState(0);
+  const [masterShowLearningGoals, setMasterShowLearningGoals] = useState(false);
   const [showLabel, setShowLabel] = useState(true);
   const [showDescription, setShowDescription] = useState(true);
   const [showAge, setShowAge] = useState(false);
@@ -19,6 +20,7 @@ export default function Home() {
       showLabel={showLabel}
       showAge={showAge}
       showDescription={showDescription}
+      masterShowLearningGoals={masterShowLearningGoals}
       label={label}
       children={resourceLabelsStructure[label]}
     />
@@ -31,6 +33,7 @@ export default function Home() {
         <button onClick={() => setShowLabel(!showLabel)}>Show Label</button>
         <button onClick={() => setShowDescription(!showDescription)}>Show Description</button>
         <button onClick={() => setShowAge(!showAge)}>Show Age</button>
+        <button onClick={() => setMasterShowLearningGoals(!masterShowLearningGoals)}>Show Learning Goals</button>
       </ButtonContainer>
       {resourceList}
     </div>

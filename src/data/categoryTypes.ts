@@ -1,6 +1,6 @@
-import { resourceLabelList } from './resourceLabels';
+import { principleDescriptions } from './principleDescriptions';
 
-type keys = typeof resourceLabelList[number];
+type keys = keyof typeof principleDescriptions;
 
 export type categoryStructureType = {
   [k in keys]?: {
@@ -22,4 +22,14 @@ export type principleStringsObject = {
 
 export type principleArraysObject = {
   [k in keys]?: string[];
+};
+
+export type principleAnyObject = {
+  [k in keys]?: {
+    [name: string]: {
+      [name: string]: {
+        [name: string]: {};
+      };
+    };
+  };
 };
